@@ -1,0 +1,6 @@
+node_modules/
+dist/
+placement_data/
+tab_groups.md
+prompt.md
+package-lock.json
