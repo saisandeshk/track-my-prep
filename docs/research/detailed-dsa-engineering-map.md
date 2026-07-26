@@ -15,7 +15,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-complexity` — Complexity and invariants
 
-**Expected outcome:** Sai can turn an English problem into input-size variables, state time and auxiliary-space bounds (including amortized behavior where relevant), name a loop/structure invariant before coding, and use it to find boundary bugs. In an interview, Sai can contrast a valid baseline with the chosen solution and defend why each pointer/queue/heap operation is counted only as often as claimed.
+**Expected outcome:** the learner can turn an English problem into input-size variables, state time and auxiliary-space bounds (including amortized behavior where relevant), name a loop/structure invariant before coding, and use it to find boundary bugs. In an interview, the learner can contrast a valid baseline with the chosen solution and defend why each pointer/queue/heap operation is counted only as often as claimed.
 
 **Mastery checkpoints:**
 
@@ -28,7 +28,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-arrays-hashing` — Arrays, strings and hashing
 
-**Expected outcome:** Sai can select direct indexing, set/map counting, sorting, or prefix aggregates based on the query and constraints; implement them without mutating inputs accidentally; and explain collision/expected-time and memory trade-offs. Interview evidence is a correct handling of duplicates, empty inputs, negative values, and prefix-sum initialization (`0 → 1` where appropriate).
+**Expected outcome:** the learner can select direct indexing, set/map counting, sorting, or prefix aggregates based on the query and constraints; implement them without mutating inputs accidentally; and explain collision/expected-time and memory trade-offs. Interview evidence is a correct handling of duplicates, empty inputs, negative values, and prefix-sum initialization (`0 → 1` where appropriate).
 
 **Mastery checkpoints:**
 
@@ -41,7 +41,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-two-pointer-window` — Two pointers and sliding windows
 
-**Expected outcome:** Sai can derive pointer movement from a validity/optimality invariant, distinguish fixed-size from variable-size windows, and prove the linear amortized scan. Interview evidence is narrating what the current window represents, why shrinking cannot discard the answer, and testing repeated/absent characters and invalid windows.
+**Expected outcome:** the learner can derive pointer movement from a validity/optimality invariant, distinguish fixed-size from variable-size windows, and prove the linear amortized scan. Interview evidence is narrating what the current window represents, why shrinking cannot discard the answer, and testing repeated/absent characters and invalid windows.
 
 **Mastery checkpoints:**
 
@@ -54,7 +54,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-search-intervals` — Binary search, sorting and intervals
 
-**Expected outcome:** Sai can write a boundary-safe binary search from a monotone predicate, choose closed versus half-open interval conventions, sort with the comparator needed for a merge/sweep, and debug infinite loops and endpoint errors. Interview evidence is saying the search space, predicate, `lo/hi` invariant, and termination result aloud before implementation.
+**Expected outcome:** the learner can write a boundary-safe binary search from a monotone predicate, choose closed versus half-open interval conventions, sort with the comparator needed for a merge/sweep, and debug infinite loops and endpoint errors. Interview evidence is saying the search space, predicate, `lo/hi` invariant, and termination result aloud before implementation.
 
 **Mastery checkpoints:**
 
@@ -67,7 +67,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-linear-structures` — Linked structures, stacks, queues and heaps
 
-**Expected outcome:** Sai can choose a structure from the operation contract (LIFO/FIFO/min-or-max retrieval/next greater), safely rewire linked nodes, and implement monotonic invariants. Interview evidence is explaining what order the structure preserves, why stale heap entries are safe or cleaned, and why a heap cannot replace ordered arbitrary deletion without extra machinery.
+**Expected outcome:** the learner can choose a structure from the operation contract (LIFO/FIFO/min-or-max retrieval/next greater), safely rewire linked nodes, and implement monotonic invariants. Interview evidence is explaining what order the structure preserves, why stale heap entries are safe or cleaned, and why a heap cannot replace ordered arbitrary deletion without extra machinery.
 
 **Mastery checkpoints:**
 
@@ -80,7 +80,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-trees` — Trees, BSTs and tries
 
-**Expected outcome:** Sai can define what recursive calls return, combine child results into a node result, choose DFS/BFS, preserve BST bounds rather than only local comparisons, and use a trie where prefix operations justify its memory cost. Interview evidence includes dry-running null/single/skewed trees and explaining recursion depth and iterative alternatives.
+**Expected outcome:** the learner can define what recursive calls return, combine child results into a node result, choose DFS/BFS, preserve BST bounds rather than only local comparisons, and use a trie where prefix operations justify its memory cost. Interview evidence includes dry-running null/single/skewed trees and explaining recursion depth and iterative alternatives.
 
 **Mastery checkpoints:**
 
@@ -93,7 +93,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-graphs` — Graphs and connectivity
 
-**Expected outcome:** Sai can model vertices/edges/direction/weights, choose adjacency representation, implement iterative or recursive traversal, detect components/cycles, derive a valid topological order, and apply union-find for connectivity. Interview evidence is a precise model before coding and an explanation of visited-state timing, recursion limits, and union-by-rank/path compression.
+**Expected outcome:** the learner can model vertices/edges/direction/weights, choose adjacency representation, implement iterative or recursive traversal, detect components/cycles, derive a valid topological order, and apply union-find for connectivity. Interview evidence is a precise model before coding and an explanation of visited-state timing, recursion limits, and union-by-rank/path compression.
 
 **Mastery checkpoints:**
 
@@ -106,7 +106,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-shortest-paths` — Shortest paths and spanning structures
 
-**Expected outcome:** Sai can select BFS, DAG relaxation, Dijkstra, Bellman–Ford, Prim, or Kruskal from edge and objective assumptions; prove relaxation/greedy correctness at interview depth; and detect negative-edge/cycle or disconnected-graph failure cases. Evidence is a table that names allowed weights, target output, complexity, and counterexample for each rejected algorithm.
+**Expected outcome:** the learner can select BFS, DAG relaxation, Dijkstra, Bellman–Ford, Prim, or Kruskal from edge and objective assumptions; prove relaxation/greedy correctness at interview depth; and detect negative-edge/cycle or disconnected-graph failure cases. Evidence is a table that names allowed weights, target output, complexity, and counterexample for each rejected algorithm.
 
 **Mastery checkpoints:**
 
@@ -119,7 +119,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-backtracking-greedy` — Backtracking, divide-and-conquer and greedy
 
-**Expected outcome:** Sai can articulate a search state, choices, constraints, base case, and undo operation; recognize when a local choice needs an exchange/stays-ahead proof; and separate divide-and-conquer recurrence reasoning from brute-force recursion. Interview evidence is pruning only when it cannot remove a valid answer and rejecting “greedy feels right” without a proof.
+**Expected outcome:** the learner can articulate a search state, choices, constraints, base case, and undo operation; recognize when a local choice needs an exchange/stays-ahead proof; and separate divide-and-conquer recurrence reasoning from brute-force recursion. Interview evidence is pruning only when it cannot remove a valid answer and rejecting “greedy feels right” without a proof.
 
 **Mastery checkpoints:**
 
@@ -132,7 +132,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-dp` — Dynamic programming
 
-**Expected outcome:** Sai can derive a minimal sufficient state, transition, base cases, and dependency order; write memoized and tabulated variants; and optimize space only after preserving the proof. Interview evidence is first writing the recurrence in words/math, explaining overlapping subproblems/optimal substructure, and testing boundary state plus reconstruction where required.
+**Expected outcome:** the learner can derive a minimal sufficient state, transition, base cases, and dependency order; write memoized and tabulated variants; and optimize space only after preserving the proof. Interview evidence is first writing the recurrence in words/math, explaining overlapping subproblems/optimal substructure, and testing boundary state plus reconstruction where required.
 
 **Mastery checkpoints:**
 
@@ -145,7 +145,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `dsa-interview-conversion` — Timed problem solving and review
 
-**Expected outcome:** Sai can lead a 35–45 minute problem interview: clarify inputs/constraints, produce and cost a baseline, select and state an invariant, code readable Python, test adversarial cases, and summarize trade-offs. Maintain an error log with category, failed assumption, corrected invariant, and 1/7/21-day re-solve evidence—not just completion.
+**Expected outcome:** the learner can lead a 35–45 minute problem interview: clarify inputs/constraints, produce and cost a baseline, select and state an invariant, code readable Python, test adversarial cases, and summarize trade-offs. Maintain an error log with category, failed assumption, corrected invariant, and 1/7/21-day re-solve evidence—not just completion.
 
 **Mastery checkpoints:**
 
@@ -160,7 +160,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `eng-python` — Python craftsmanship
 
-**Expected outcome:** Sai can write idiomatic, typed, testable Python for data/ML utilities; choose list/dict/set/generator and mutable/immutable boundaries deliberately; surface errors with useful exceptions; and explain complexity and memory effects. Interview evidence is a small clean module with a stable function contract, tests, type hints, iterator behavior, and an explanation of why it materializes or streams data.
+**Expected outcome:** the learner can write idiomatic, typed, testable Python for data/ML utilities; choose list/dict/set/generator and mutable/immutable boundaries deliberately; surface errors with useful exceptions; and explain complexity and memory effects. Interview evidence is a small clean module with a stable function contract, tests, type hints, iterator behavior, and an explanation of why it materializes or streams data.
 
 **Mastery checkpoints:**
 
@@ -173,7 +173,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `eng-testing-debugging` — Testing and debugging
 
-**Expected outcome:** Sai can reduce a failing data/model/service behavior to a deterministic reproduction, state competing hypotheses, add the smallest discriminating test and a regression test, and use logs/metrics without masking root cause. Interview evidence is a concise debugging narrative: symptom → observables → hypothesis → experiment → fix → regression protection.
+**Expected outcome:** the learner can reduce a failing data/model/service behavior to a deterministic reproduction, state competing hypotheses, add the smallest discriminating test and a regression test, and use logs/metrics without masking root cause. Interview evidence is a concise debugging narrative: symptom → observables → hypothesis → experiment → fix → regression protection.
 
 **Mastery checkpoints:**
 
@@ -186,7 +186,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `eng-git-collaboration` — Git and engineering collaboration
 
-**Expected outcome:** Sai can make small reviewable commits, branch and integrate safely, resolve conflicts with semantic checks, distinguish local rewriting from shared-history risk, and leave issue/PR context a reviewer can reproduce. Interview evidence is a clean repository history and an explanation of rollback/revert versus reset/rebase.
+**Expected outcome:** the learner can make small reviewable commits, branch and integrate safely, resolve conflicts with semantic checks, distinguish local rewriting from shared-history risk, and leave issue/PR context a reviewer can reproduce. Interview evidence is a clean repository history and an explanation of rollback/revert versus reset/rebase.
 
 **Mastery checkpoints:**
 
@@ -199,7 +199,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `eng-sql-data` — SQL and data handling
 
-**Expected outcome:** Sai can model a small relational dataset, write correct joins/aggregations/window queries, reason about nulls/cardinality/transaction effects, inspect a query plan at a conceptual level, and move data into a reproducible dataframe pipeline. Interview evidence is predicting join row counts before execution and explaining the index/order trade-off rather than merely producing syntax.
+**Expected outcome:** the learner can model a small relational dataset, write correct joins/aggregations/window queries, reason about nulls/cardinality/transaction effects, inspect a query plan at a conceptual level, and move data into a reproducible dataframe pipeline. Interview evidence is predicting join row counts before execution and explaining the index/order trade-off rather than merely producing syntax.
 
 **Mastery checkpoints:**
 
@@ -212,7 +212,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `eng-apis` — APIs and service boundaries
 
-**Expected outcome:** Sai can design a small HTTP contract with validated schemas, status/error semantics, auth vocabulary, idempotency and timeout/retry behavior; implement and test it; and identify which guarantees belong server-side. Interview evidence is an endpoint/data/error sketch plus a failure table covering duplicate request, invalid input, dependency timeout, and authorization failure.
+**Expected outcome:** the learner can design a small HTTP contract with validated schemas, status/error semantics, auth vocabulary, idempotency and timeout/retry behavior; implement and test it; and identify which guarantees belong server-side. Interview evidence is an endpoint/data/error sketch plus a failure table covering duplicate request, invalid input, dependency timeout, and authorization failure.
 
 **Mastery checkpoints:**
 
@@ -225,7 +225,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `eng-concurrency` — Processes, threads and concurrency
 
-**Expected outcome:** Sai can choose processes, threads, async I/O, or a queue-based design from workload and isolation needs; identify shared invariants and synchronization; reproduce a race; and explain throughput, latency, blocking, memory visibility and deadlock trade-offs. Interview evidence is a tiny concurrent program with a deterministic test/harness and a written argument for its synchronization boundary.
+**Expected outcome:** the learner can choose processes, threads, async I/O, or a queue-based design from workload and isolation needs; identify shared invariants and synchronization; reproduce a race; and explain throughput, latency, blocking, memory visibility and deadlock trade-offs. Interview evidence is a tiny concurrent program with a deterministic test/harness and a written argument for its synchronization boundary.
 
 **Mastery checkpoints:**
 
@@ -238,7 +238,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `eng-containers-ci` — Containers, CI and deployment vocabulary
 
-**Expected outcome:** Sai can package a small API/model service reproducibly, separate image from runtime configuration/secrets, pin dependencies, write a CI gate that runs tests/lint/build, and explain rollout/rollback criteria. Interview evidence is a working container build plus a CI workflow and a release checklist that refuses deployment on a failed quality signal.
+**Expected outcome:** the learner can package a small API/model service reproducibly, separate image from runtime configuration/secrets, pin dependencies, write a CI gate that runs tests/lint/build, and explain rollout/rollback criteria. Interview evidence is a working container build plus a CI workflow and a release checklist that refuses deployment on a failed quality signal.
 
 **Mastery checkpoints:**
 
@@ -251,7 +251,7 @@ Primary DSA references are open: [DSA Handbook home](https://dsa.handbook.academ
 
 ### `eng-operational-readiness` — Operational engineering
 
-**Expected outcome:** Sai can instrument a small service with structured logs, metrics, traces/correlation IDs, health checks and actionable alerts; write an SLI/SLO/error-budget sketch; protect secrets/config; and author a runbook that makes safe diagnosis possible. Interview evidence is a dashboard/alert/runbook triad that distinguishes user harm from internal noise and names owner/action.
+**Expected outcome:** the learner can instrument a small service with structured logs, metrics, traces/correlation IDs, health checks and actionable alerts; write an SLI/SLO/error-budget sketch; protect secrets/config; and author a runbook that makes safe diagnosis possible. Interview evidence is a dashboard/alert/runbook triad that distinguishes user harm from internal noise and names owner/action.
 
 **Mastery checkpoints:**
 

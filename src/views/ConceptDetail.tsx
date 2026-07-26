@@ -8,12 +8,18 @@ import {
   History,
   ListChecks
 } from "lucide-react";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { concepts, conceptsById } from "../data/concepts";
 import { domainsById } from "../data/domains";
 import { resourcesById } from "../data/resources";
 import { resourceUnitsByConceptId } from "../data/resource-units";
-import { isRevisionDue, masteryLabels, masteryOrder, nextRevisionDate } from "../lib/progress";
+import {
+  isRevisionDue,
+  masteryLabels,
+  masteryOrder,
+  nextRevisionDate,
+  suggestedMasteryForSession
+} from "../lib/progress";
 import { routeHref } from "../lib/navigation";
 import { useUserData } from "../state/UserDataContext";
 import type { EvidenceType, MasteryLevel } from "../types";
@@ -73,11 +79,17 @@ const formatDate = (value?: string) =>
 export const ConceptDetail = ({ id }: { id: string }) => {
   const { data, updateConcept } = useUserData();
   const item = conceptsById.get(id);
+  const storedMastery = data.conceptProgress[id]?.mastery ?? "not_started";
+  const [selectedMastery, setSelectedMastery] = useState<MasteryLevel>(storedMastery);
 
   const successors = useMemo(
     () => concepts.filter((candidate) => candidate.prerequisiteIds.includes(id)),
     [id]
   );
+
+  useEffect(() => {
+    setSelectedMastery(storedMastery);
+  }, [id, storedMastery]);
 
   if (!item) {
     return (
@@ -108,6 +120,10 @@ export const ConceptDetail = ({ id }: { id: string }) => {
   });
   const exactUnits = resourceUnitsByConceptId.get(id) ?? [];
   const history = data.sessions.filter((session) => session.conceptIds.includes(id));
+  const latestSession = history[0];
+  const sessionSuggestion = latestSession
+    ? suggestedMasteryForSession(progress.mastery, latestSession.activityType)
+    : undefined;
 
   const toggleEvidence = (evidence: EvidenceType) => {
     const next = progress.evidence.includes(evidence)
@@ -408,16 +424,22 @@ export const ConceptDetail = ({ id }: { id: string }) => {
           <section className="surface p-5">
             <p className="eyebrow">Mastery control</p>
             <p className="mt-2 text-sm leading-5 text-black/50">
-              Choose the strongest level you can support with evidence.
+              Logging can only start an untouched concept at Learning. Complete the matching
+              checkpoint, choose the strongest level you can defend, then confirm it here.
             </p>
+            {sessionSuggestion ? (
+              <div className="mt-4 rounded-xl bg-moss-50 px-3 py-3 text-xs leading-5 text-moss-800">
+                <span className="font-semibold">Latest session suggestion:</span>{" "}
+                {masteryLabels[sessionSuggestion]}. This suggestion has not been applied as a
+                mastery increase.
+              </div>
+            ) : null}
             <label className="mt-4 block text-xs font-semibold text-black/60">
               Demonstrated level
               <select
                 className="input mt-1.5"
-                value={progress.mastery}
-                onChange={(event) =>
-                  updateConcept(id, { mastery: event.target.value as MasteryLevel })
-                }
+                value={selectedMastery}
+                onChange={(event) => setSelectedMastery(event.target.value as MasteryLevel)}
               >
                 {masteryOrder.map((mastery) => (
                   <option value={mastery} key={mastery}>
@@ -454,8 +476,16 @@ export const ConceptDetail = ({ id }: { id: string }) => {
                 }
               />
             </label>
-            <a href="#/tracker" className="button-primary mt-5 w-full">
-              <ListChecks size={16} /> Log evidence
+            <button
+              type="button"
+              className="button-primary mt-5 w-full disabled:cursor-not-allowed disabled:opacity-45"
+              disabled={selectedMastery === progress.mastery}
+              onClick={() => updateConcept(id, { mastery: selectedMastery })}
+            >
+              <CheckCircle2 size={16} /> Confirm mastery
+            </button>
+            <a href="#/tracker" className="button-secondary mt-2 w-full">
+              <ListChecks size={16} /> Log a session
             </a>
           </section>
 
@@ -485,8 +515,8 @@ export const ConceptDetail = ({ id }: { id: string }) => {
               <span className="text-sm font-semibold">Evidence over activity</span>
             </div>
             <p className="mt-2 text-xs leading-5 text-black/50">
-              Opening a link never changes mastery. Solving, explaining, implementing, debugging,
-              designing and mocks do.
+              Sessions record work and evidence, but never raise mastery beyond Learning. Confirm
+              higher levels here only after completing the relevant checkpoints.
             </p>
           </section>
         </aside>

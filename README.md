@@ -95,7 +95,7 @@ Content statuses are deliberately honest:
 
 Coverage is the weighted share of concepts meaningfully started. Readiness uses the demonstrated mastery level, evidence breadth, concept weight, and revision freshness. Percentages are rounded to five-point steps and paired with plain-language bands to avoid false precision.
 
-Opening a resource never changes mastery. Logging practice, implementation, revision, or a mock records the corresponding evidence; the learner can then set the strongest mastery level they can defend.
+Opening a resource never changes mastery. Any first logged session moves an untouched concept only to `learning`; practice, implementation, revision, and mock sessions record their corresponding evidence without automatically granting a higher level. The interface shows a separate session-based suggestion, and the learner must complete the relevant checkpoint and explicitly confirm any higher mastery level on the concept page.
 
 `needs review` is derived and does not overwrite mastery. The configurable base interval is shorter while learning and longer for interview-ready evidence. Overdue concepts receive a visible readiness discount until revised.
 

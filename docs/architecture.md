@@ -49,7 +49,7 @@ interface UserData {
 }
 ```
 
-Mastery and revision are separate. `ConceptProgress.mastery` records the learner’s strongest demonstrated level; `lastStudiedAt` and `lastRevisedAt` drive a derived review signal. Evidence is stored as observable verbs: solve, explain, implement, debug, design, and mock.
+Mastery and revision are separate. `ConceptProgress.mastery` records the learner’s strongest explicitly confirmed level; `lastStudiedAt` and `lastRevisedAt` drive a derived review signal. Any first session can only start an untouched concept at `learning`. Session type may attach observable evidence and produce a separate suggestion, but higher mastery requires completing the relevant checkpoint and confirming the level on the concept page. Evidence is stored as observable verbs: solve, explain, implement, debug, design, and mock.
 
 `src/lib/storage.ts` validates imports before replacing current state. A future schema change should:
 

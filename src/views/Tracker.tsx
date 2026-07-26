@@ -2,9 +2,10 @@ import { Check, Clock3, Plus } from "lucide-react";
 import { type FormEvent, useMemo, useState } from "react";
 import { conceptsById } from "../data/concepts";
 import { domains, domainsById } from "../data/domains";
-import { todayMinutesByDomain } from "../lib/progress";
+import { masteryLabels, suggestedMasteryForSession, todayMinutesByDomain } from "../lib/progress";
+import { routeHref } from "../lib/navigation";
 import { useUserData } from "../state/UserDataContext";
-import type { ActivityType } from "../types";
+import type { ActivityType, MasteryLevel } from "../types";
 import { EmptyState, ProgressBar } from "../components/ui";
 
 const nowForInput = () => {
@@ -12,6 +13,19 @@ const nowForInput = () => {
   const local = new Date(now.getTime() - now.getTimezoneOffset() * 60_000);
   return local.toISOString().slice(0, 16);
 };
+
+const checkpointForSuggestion: Record<MasteryLevel, string> = {
+  not_started: "Start with the Understand checkpoint",
+  learning: "Complete the Understand checkpoint",
+  practiced: "Complete the Apply checkpoint",
+  can_explain: "Re-check the Diagnose checkpoint",
+  interview_ready: "Re-check the Defend checkpoint"
+};
+
+interface MasterySuggestion {
+  conceptId: string;
+  mastery: MasteryLevel;
+}
 
 export const Tracker = () => {
   const { data, addSession } = useUserData();
@@ -25,6 +39,7 @@ export const Tracker = () => {
   const [confidence, setConfidence] = useState<1 | 2 | 3 | 4 | 5>(3);
   const [nextAction, setNextAction] = useState("");
   const [saved, setSaved] = useState(false);
+  const [masterySuggestions, setMasterySuggestions] = useState<MasterySuggestion[]>([]);
 
   const domain = domainsById.get(domainId) ?? domains[0];
   const domainConcepts = useMemo(
@@ -36,6 +51,13 @@ export const Tracker = () => {
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (!selectedConcepts.length || minutes < 1) return;
+    const suggestions = selectedConcepts.map((conceptId) => ({
+      conceptId,
+      mastery: suggestedMasteryForSession(
+        data.conceptProgress[conceptId]?.mastery ?? "not_started",
+        activityType
+      )
+    }));
     addSession({
       id: `session-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
       date: new Date(date).toISOString(),
@@ -47,6 +69,7 @@ export const Tracker = () => {
       confidence,
       nextAction: nextAction.trim()
     });
+    setMasterySuggestions(suggestions);
     setSaved(true);
     setSelectedConcepts([]);
     setReflection("");
@@ -243,10 +266,39 @@ export const Tracker = () => {
               })}
             </div>
           </div>
+          {masterySuggestions.length ? (
+            <div className="surface border border-moss-200 p-5">
+              <p className="eyebrow">Suggested mastery review</p>
+              <p className="mt-2 text-sm leading-6 text-black/55">
+                These are suggestions from the session type, not applied mastery changes. Complete
+                the matching checkpoint and confirm the level on the concept page.
+              </p>
+              <div className="mt-4 space-y-2">
+                {masterySuggestions.map((suggestion) => {
+                  const concept = conceptsById.get(suggestion.conceptId);
+                  if (!concept) return null;
+                  return (
+                    <a
+                      key={suggestion.conceptId}
+                      href={routeHref({ name: "concept", id: suggestion.conceptId })}
+                      className="block rounded-xl bg-moss-50 px-3 py-3 hover:bg-moss-100"
+                    >
+                      <span className="block text-sm font-semibold">{concept.name}</span>
+                      <span className="mt-1 block text-xs text-black/55">
+                        Suggested: {masteryLabels[suggestion.mastery]} ·{" "}
+                        {checkpointForSuggestion[suggestion.mastery]}
+                      </span>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
           <div className="surface-muted p-5 text-sm leading-6 text-black/55">
-            <strong className="text-ink">Logging behavior:</strong> learning starts an untouched
-            concept; practice, implementation and mocks also attach matching evidence. Revision
-            updates its review clock. You can refine mastery on the concept page.
+            <strong className="text-ink">Logging behavior:</strong> any first session starts an
+            untouched concept at Learning only. Practice, implementation and mocks attach matching
+            evidence; revision updates the review clock. Higher mastery requires explicit
+            confirmation on the concept page.
           </div>
         </aside>
       </section>

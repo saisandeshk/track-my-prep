@@ -1,5 +1,13 @@
 import { concepts } from "../data/concepts";
-import type { Concept, ConceptProgress, MasteryLevel, StudySession, UserData } from "../types";
+import type {
+  ActivityType,
+  Concept,
+  ConceptProgress,
+  EvidenceType,
+  MasteryLevel,
+  StudySession,
+  UserData
+} from "../types";
 
 export const masteryOrder: MasteryLevel[] = [
   "not_started",
@@ -15,6 +23,58 @@ export const masteryLabels: Record<MasteryLevel, string> = {
   practiced: "Practiced",
   can_explain: "Can explain",
   interview_ready: "Interview ready"
+};
+
+const evidenceForActivity: Partial<Record<ActivityType, EvidenceType>> = {
+  practice: "solve",
+  implement: "implement",
+  revise: "explain",
+  mock: "mock"
+};
+
+export const suggestedMasteryForSession = (
+  currentMastery: MasteryLevel,
+  activityType: ActivityType
+): MasteryLevel => {
+  if (masteryOrder.indexOf(currentMastery) >= masteryOrder.indexOf("practiced")) {
+    return currentMastery;
+  }
+  if (activityType === "learn" || activityType === "revise") return "learning";
+  return "practiced";
+};
+
+export const applySessionToUserData = (current: UserData, session: StudySession): UserData => {
+  const progress = { ...current.conceptProgress };
+
+  for (const conceptId of session.conceptIds) {
+    const existing = progress[conceptId] ?? {
+      conceptId,
+      mastery: "not_started" as const,
+      evidence: [],
+      confidence: 3 as const
+    };
+    const evidence = evidenceForActivity[session.activityType];
+    const nextEvidence = evidence
+      ? Array.from(new Set([...existing.evidence, evidence]))
+      : existing.evidence;
+
+    progress[conceptId] = {
+      ...existing,
+      conceptId,
+      mastery: existing.mastery === "not_started" ? "learning" : existing.mastery,
+      evidence: nextEvidence,
+      confidence: session.confidence,
+      lastStudiedAt: session.date,
+      lastRevisedAt: session.activityType === "revise" ? session.date : existing.lastRevisedAt,
+      nextAction: session.nextAction
+    };
+  }
+
+  return {
+    ...current,
+    sessions: [session, ...current.sessions],
+    conceptProgress: progress
+  };
 };
 
 const masteryDepth: Record<MasteryLevel, number> = {

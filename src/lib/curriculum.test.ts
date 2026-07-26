@@ -24,6 +24,7 @@ describe("canonical curriculum", () => {
   it("gives every concept outcomes, checkpoints and learning resources", () => {
     for (const item of concepts) {
       expect(item.outcome.length, item.id).toBeGreaterThan(100);
+      expect(item.outcome, item.id).not.toMatch(/\bSai\b/i);
       expect(item.checkpoints.length, item.id).toBeGreaterThanOrEqual(4);
       expect(new Set(item.checkpoints.map((checkpoint) => checkpoint.level)).size, item.id).toBe(4);
       expect(

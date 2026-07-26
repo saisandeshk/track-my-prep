@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
-import type { Concept, ConceptProgress } from "../types";
-import { calculateMetrics, isRevisionDue, revisionIntervalFor } from "./progress";
+import type { ActivityType, Concept, ConceptProgress, StudySession } from "../types";
+import { createDefaultUserData } from "./storage";
+import {
+  applySessionToUserData,
+  calculateMetrics,
+  isRevisionDue,
+  revisionIntervalFor,
+  suggestedMasteryForSession
+} from "./progress";
 
 const concept = (id: string, weight: 1 | 2 | 3): Concept => ({
   id,
@@ -32,6 +39,18 @@ const progress = (
   evidence: ["explain"],
   confidence: 3,
   lastStudiedAt: date
+});
+
+const session = (activityType: ActivityType): StudySession => ({
+  id: `session-${activityType}`,
+  date: "2026-07-26T10:00:00.000Z",
+  domainId: "test",
+  conceptIds: ["a"],
+  activityType,
+  minutes: 45,
+  reflection: "",
+  confidence: 4,
+  nextAction: "Complete the matching checkpoint."
 });
 
 describe("progress and readiness", () => {
@@ -86,5 +105,34 @@ describe("progress and readiness", () => {
         new Date("2026-07-26T00:00:00.000Z")
       )
     ).toBe(true);
+  });
+
+  it.each<ActivityType>(["learn", "practice", "implement", "revise", "mock"])(
+    "only starts an untouched concept at learning after a %s session",
+    (activityType) => {
+      const updated = applySessionToUserData(createDefaultUserData(), session(activityType));
+      expect(updated.conceptProgress.a.mastery).toBe("learning");
+    }
+  );
+
+  it("records session evidence without changing an explicitly confirmed mastery level", () => {
+    const initial = createDefaultUserData();
+    initial.conceptProgress.a = progress("a", "can_explain");
+
+    const updated = applySessionToUserData(initial, session("implement"));
+
+    expect(updated.conceptProgress.a.mastery).toBe("can_explain");
+    expect(updated.conceptProgress.a.evidence).toEqual(
+      expect.arrayContaining(["explain", "implement"])
+    );
+  });
+
+  it("keeps session-based mastery suggestions separate from applied progress", () => {
+    const initial = createDefaultUserData();
+    const updated = applySessionToUserData(initial, session("practice"));
+
+    expect(suggestedMasteryForSession("not_started", "practice")).toBe("practiced");
+    expect(suggestedMasteryForSession("not_started", "revise")).toBe("learning");
+    expect(updated.conceptProgress.a.mastery).toBe("learning");
   });
 });

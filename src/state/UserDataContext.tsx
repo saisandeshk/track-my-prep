@@ -15,6 +15,7 @@ import type {
   UserData,
   UserSettings
 } from "../types";
+import { applySessionToUserData } from "../lib/progress";
 import { createDefaultUserData, loadUserData, saveUserData } from "../lib/storage";
 
 interface UserDataContextValue {
@@ -75,51 +76,7 @@ export const UserDataProvider = ({ children }: PropsWithChildren) => {
   );
 
   const addSession = useCallback((session: StudySession) => {
-    setDataState((current) => {
-      const progress = { ...current.conceptProgress };
-      for (const conceptId of session.conceptIds) {
-        const existing = progress[conceptId] ?? {
-          conceptId,
-          mastery: "not_started" as const,
-          evidence: [],
-          confidence: 3 as const
-        };
-        const evidence: EvidenceType | undefined =
-          session.activityType === "practice"
-            ? "solve"
-            : session.activityType === "implement"
-              ? "implement"
-              : session.activityType === "mock"
-                ? "mock"
-                : session.activityType === "revise"
-                  ? "explain"
-                  : undefined;
-        const nextEvidence = evidence
-          ? Array.from(new Set([...existing.evidence, evidence]))
-          : existing.evidence;
-        const suggestedMastery =
-          existing.mastery === "not_started"
-            ? session.activityType === "learn"
-              ? "learning"
-              : "practiced"
-            : existing.mastery;
-        progress[conceptId] = {
-          ...existing,
-          conceptId,
-          mastery: suggestedMastery,
-          evidence: nextEvidence,
-          confidence: session.confidence,
-          lastStudiedAt: session.date,
-          lastRevisedAt: session.activityType === "revise" ? session.date : existing.lastRevisedAt,
-          nextAction: session.nextAction
-        };
-      }
-      return {
-        ...current,
-        sessions: [session, ...current.sessions],
-        conceptProgress: progress
-      };
-    });
+    setDataState((current) => applySessionToUserData(current, session));
   }, []);
 
   const reset = useCallback(() => setDataState(createDefaultUserData()), []);
